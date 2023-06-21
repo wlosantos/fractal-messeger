@@ -1,11 +1,14 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby '3.2.2'
 
-gem "rails", "~> 7.0.5"
-gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
+gem 'rails', '~> 7.0.5'
+# gem "pg", "~> 1.1"
+gem 'puma', '~> 5.0'
+gem 'sqlite3', '~> 1.4'
 
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'

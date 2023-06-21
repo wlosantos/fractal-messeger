@@ -8,7 +8,7 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'database_cleaner'
-require "pundit/rspec"
+require 'pundit/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -62,7 +62,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   # short shoulda rspec
-  Shoulda::Matchers.configure do |config|
+  Shoulda::Matchers.configure do |config| # rubocop:todo Lint/ShadowingOuterLocalVariable
     config.integrate do |with|
       with.test_framework :rspec
       with.library :rails
