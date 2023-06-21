@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
   #   it { is_expected.to have_many(:messages).dependent(:destroy) }
   # end
 
-  describe 'create user' do
+  describe 'create user' do # rubocop:todo Metrics/BlockLength
     context 'successfully' do
       let!(:user) { build(:user) }
       it { expect(user).to be_valid }
@@ -70,19 +70,19 @@ RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
       it { expect(user).not_to be_valid }
     end
 
-    context "with admin role" do
+    context 'with admin role' do
       let(:user) { create(:user, :admin) }
       it { expect(user).to be_valid }
       it { expect(user.has_role?(:admin)).to be_truthy }
     end
 
-    context "with user role" do
+    context 'with user role' do
       let(:user) { create(:user, :user) }
       it { expect(user).to be_valid }
       it { expect(user.has_role?(:user)).to be_truthy }
     end
 
-    context "with first user is admin" do
+    context 'with first user is admin' do
       let(:user) { create(:user) }
       it { expect(user.has_role?(:admin)).to be_truthy }
     end
