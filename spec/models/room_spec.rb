@@ -30,13 +30,49 @@ RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
   describe 'validations' do
     subject { build(:room, closed: true) }
     it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_length_of(:name).is_at_most(20) }
+    it { is_expected.to validate_length_of(:name).is_at_most(30) }
     it { is_expected.to validate_uniqueness_of(:name).scoped_to(:app_id).ignoring_case_sensitivity }
     it { is_expected.to validate_presence_of(:closed_at) }
   end
 
   describe 'enums' do
     it { is_expected.to define_enum_for(:kind).with_values(direct: 0, groups: 1, privates: 2, help_desk: 3) }
+  end
+
+  describe 'created a room' do # rubocop:todo Metrics/BlockLength
+    context 'successfully' do
+      it 'with valid attributes' do
+        expect(build(:room)).to be_valid
+      end
+    end
+
+    context 'failure' do
+      it 'without name' do
+        expect(build(:room, name: nil)).not_to be_valid
+      end
+
+      it 'with duplicate name' do
+        app = create(:app)
+        create(:room, name: 'test', app:)
+        expect(build(:room, name: 'test', app:)).not_to be_valid
+      end
+
+      it 'without app' do
+        expect(build(:room, app: nil)).not_to be_valid
+      end
+
+      it 'without create_by' do
+        expect(build(:room, create_by: nil)).not_to be_valid
+      end
+
+      it 'when closed room without closed_at' do
+        expect(build(:room, closed: true, closed_at: nil)).not_to be_valid
+      end
+
+      it 'when closed room with closed_at' do
+        expect(build(:room, closed: true, closed_at: Time.zone.now)).to be_valid
+      end
+    end
   end
 
   describe 'methods' do # rubocop:todo Metrics/BlockLength
@@ -65,13 +101,27 @@ RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
     end
 
     describe '#close!' do
-      subject { build(:room, closed: true, kind: :help_desk) }
-      it { expect(subject.close!).to be_truthy }
+      context 'when kind is help_desk' do
+        subject { build(:room, closed: false, kind: :help_desk) }
+        it { expect(subject.close!).to be_truthy }
+      end
+
+      context 'when kind is not help_desk' do
+        subject { build(:room, closed: true, kind: :direct) }
+        it { expect(subject.close!).to be_falsey }
+      end
     end
 
     describe '#open!' do
-      subject { build(:room, closed: true) }
-      it { expect(subject.open!).to be_truthy }
+      context 'when kind is help_desk' do
+        subject { build(:room, kind: :help_desk, closed: true) }
+        it { expect(subject.open!).to be_truthy }
+      end
+
+      context 'when kind is not help_desk' do
+        subject { build(:room, kind: :direct, closed: true) }
+        it { expect(subject.open!).to be_falsey }
+      end
     end
   end
 end

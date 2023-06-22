@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :room do
-    name { Faker::Lorem.sentences(number: 1).first[0..19] }
+    name { Faker::Lorem.sentences(number: 1).first[0..15] }
     kind { %w[direct groups privates help_desk].sample }
     read_only { false }
     moderated { false }
