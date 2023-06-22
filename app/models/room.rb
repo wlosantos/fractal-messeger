@@ -7,6 +7,7 @@ class Room < ApplicationRecord # rubocop:todo Style/Documentation
 
   has_many :room_participants, dependent: :destroy
   has_many :users, through: :room_participants
+  has_many :messages, dependent: :destroy
 
   enum kind: { direct: 0, groups: 1, privates: 2, help_desk: 3 }
 

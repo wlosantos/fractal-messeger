@@ -8,6 +8,7 @@ class User < ApplicationRecord # rubocop:todo Style/Documentation
   has_many :rooms, through: :room_participants
   has_many :create_by, class_name: 'Room', foreign_key: 'create_by_id', dependent: :destroy
   has_and_belongs_to_many :rooms_moderators, class_name: 'Room', join_table: 'rooms_users'
+  has_many :messages, dependent: :destroy
 
   validates :name, :email, :fractal_id, :dg_token, presence: true
   validates :email, :fractal_id, uniqueness: { case_sensitive: false }

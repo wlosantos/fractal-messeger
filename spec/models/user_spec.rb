@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
     it { is_expected.to have_and_belong_to_many(:rooms_moderators).join_table('rooms_users') }
     it { is_expected.to have_many(:room_participants).dependent(:destroy) }
     it { is_expected.to have_many(:rooms).through(:room_participants) }
-    #   it { is_expected.to have_many(:messages).dependent(:destroy) }
+    it { is_expected.to have_many(:messages).dependent(:destroy) }
   end
 
   describe 'create user' do # rubocop:todo Metrics/BlockLength
