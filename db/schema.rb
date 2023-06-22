@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_622_090_108) do # rubocop:todo Metrics/BlockLength
+ActiveRecord::Schema[7.0].define(version: 20_230_622_105_758) do # rubocop:todo Metrics/BlockLength
   create_table 'apps', force: :cascade do |t|
     t.string 'name', null: false
     t.integer 'dg_app_id', null: false
@@ -44,6 +44,13 @@ ActiveRecord::Schema[7.0].define(version: 20_230_622_090_108) do # rubocop:todo 
     t.datetime 'updated_at', null: false
     t.index ['app_id'], name: 'index_rooms_on_app_id'
     t.index ['create_by_id'], name: 'index_rooms_on_create_by_id'
+  end
+
+  create_table 'rooms_users', id: false, force: :cascade do |t|
+    t.integer 'room_id'
+    t.integer 'user_id'
+    t.index ['room_id'], name: 'index_rooms_users_on_room_id'
+    t.index ['user_id'], name: 'index_rooms_users_on_user_id'
   end
 
   create_table 'users', force: :cascade do |t|

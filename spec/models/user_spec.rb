@@ -43,6 +43,7 @@ RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
   describe 'associations' do
     it { is_expected.to belong_to(:app) }
     it { is_expected.to have_many(:rooms).with_foreign_key('create_by_id').dependent(:destroy) }
+    it { is_expected.to have_and_belong_to_many(:rooms_moderators).join_table('rooms_users') }
     #   it { is_expected.to have_many(:moderator_rooms).class_name('Room').with_foreign_key('moderator_id') }
     #   it { is_expected.to have_many(:origin_rooms).class_name('Room').with_foreign_key('origin_id') }
     #   it { is_expected.to have_many(:room_participants).dependent(:destroy) }

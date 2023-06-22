@@ -3,6 +3,7 @@
 class Room < ApplicationRecord # rubocop:todo Style/Documentation
   belongs_to :app
   belongs_to :create_by, class_name: 'User', foreign_key: 'create_by_id'
+  has_and_belongs_to_many :moderators, class_name: 'User', join_table: 'rooms_users'
 
   enum kind: { direct: 0, groups: 1, privates: 2, help_desk: 3 }
 

@@ -24,6 +24,7 @@ RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
   describe 'associations' do
     it { is_expected.to belong_to(:app) }
     it { is_expected.to belong_to(:create_by).class_name('User') }
+    it { is_expected.to have_and_belong_to_many(:moderators).class_name('User') }
   end
 
   describe 'validations' do
