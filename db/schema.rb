@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_622_001_520) do # rubocop:todo Metrics/BlockLength
+ActiveRecord::Schema[7.0].define(version: 20_230_622_004_028) do # rubocop:todo Metrics/BlockLength
   create_table 'apps', force: :cascade do |t|
     t.string 'name', null: false
     t.integer 'dg_app_id', null: false
@@ -38,6 +38,8 @@ ActiveRecord::Schema[7.0].define(version: 20_230_622_001_520) do # rubocop:todo 
     t.string 'dg_token', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'app_id', null: false
+    t.index ['app_id'], name: 'index_users_on_app_id'
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['fractal_id'], name: 'index_users_on_fractal_id', unique: true
   end
@@ -49,4 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 20_230_622_001_520) do # rubocop:todo 
     t.index %w[user_id role_id], name: 'index_users_roles_on_user_id_and_role_id'
     t.index ['user_id'], name: 'index_users_roles_on_user_id'
   end
+
+  add_foreign_key 'users', 'apps'
 end
