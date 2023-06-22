@@ -12,7 +12,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_621_221_510) do # rubocop:todo Metrics/BlockLength
+ActiveRecord::Schema[7.0].define(version: 20_230_622_001_520) do # rubocop:todo Metrics/BlockLength
+  create_table 'apps', force: :cascade do |t|
+    t.string 'name', null: false
+    t.integer 'dg_app_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'roles', force: :cascade do |t|
     t.string 'name'
     t.string 'resource_type'
