@@ -25,7 +25,7 @@ RSpec.describe App, type: :model do # rubocop:todo Metrics/BlockLength
 
   describe 'associations' do
     it { is_expected.to have_many(:users).dependent(:destroy) }
-    #   it { is_expected.to have_many(:rooms).dependent(:destroy) }
+    it { is_expected.to have_many(:rooms).dependent(:destroy) }
   end
 
   describe 'create app' do
