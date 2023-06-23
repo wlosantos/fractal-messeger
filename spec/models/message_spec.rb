@@ -22,6 +22,8 @@ RSpec.describe Message, type: :model do
   end
 
   describe "associations" do
+    before { allow_any_instance_of(Message).to receive(:message_permitted) }
+
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:parent).class_name("Message").optional.with_foreign_key(:parent_id) }
     it { is_expected.to belong_to(:room) }
@@ -33,10 +35,40 @@ RSpec.describe Message, type: :model do
   end
 
   describe "create message" do
+    let!(:room) { create(:room) }
+    
     context "with valid attributes" do
-      it "should create message" do
-        expect { create(:message) }.to change(Message, :count).by(1)
-      end
+      let(:user) { create(:room_participant, room: room) }
+      let(:message) { build(:message, user: user.user, room: room) }
+
+      it { expect(message).to be_valid }
+    end
+    
+    context "when user blocked" do
+      let!(:participant) { create(:room_participant, is_blocked: true, room:) }
+      let(:message) { build(:message, user: participant.user, room: room) }
+      before { message.valid? }
+
+      it { expect(message).to_not be_valid }
+      it { expect(message.errors.full_messages).to include("User is blocked to send message") }
+    end
+
+    context "when user is not participant" do
+      let(:new_user) { create(:user) }
+      let(:message) { build(:message, user: new_user, room: room) }
+      before { message.valid? }
+
+      it { expect(message).to_not be_valid }
+      it { expect(message.errors.full_messages).to include("User is not participant") }
+    end
+
+    context "when room is closed" do
+      let(:message) { build(:message, room: room) }
+      before { room.update(closed: true) }
+      before { message.valid? }
+
+      it { expect(message).to_not be_valid }
+      it { expect(message.errors.full_messages).to include("Room is closed") }
     end
   end
 end
