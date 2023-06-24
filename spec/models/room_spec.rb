@@ -42,7 +42,7 @@ RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
     it { is_expected.to define_enum_for(:kind).with_values(direct: 0, groups: 1, privates: 2, help_desk: 3) }
   end
 
-  describe 'created a room' do # rubocop:todo Metrics/BlockLength
+  describe 'created a room' do
     context 'successfully' do
       it 'with valid attributes' do
         expect(build(:room)).to be_valid
@@ -78,7 +78,7 @@ RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
     end
   end
 
-  describe 'methods' do # rubocop:todo Metrics/BlockLength
+  describe 'methods' do
     describe '#closed?' do
       context 'when closed is true' do
         subject { build(:room, closed: true) }

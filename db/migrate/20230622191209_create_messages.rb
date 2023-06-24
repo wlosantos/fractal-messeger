@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CreateMessages < ActiveRecord::Migration[7.0]
   def change
     create_table :messages do |t|
-      t.string :content, null: false, default: ""
+      t.string :content, null: false, default: ''
       t.integer :status_moderation, null: false, default: 0
       t.timestamp :moderated_at, null: true
       t.timestamp :refused_at, null: true

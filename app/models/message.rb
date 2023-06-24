@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Message < ApplicationRecord
   belongs_to :user
   belongs_to :room
@@ -7,7 +9,7 @@ class Message < ApplicationRecord
   enum status_moderation: { blank: 0, pending: 1, approved: 2, refused: 3 }
 
   validates :content, presence: true, length: { maximum: 240 }
-  validate :message_permitted, on: [:create, :update]
+  validate :message_permitted, on: %i[create update]
 
   def message_permitted
     user_blocked_send_message
@@ -20,20 +22,20 @@ class Message < ApplicationRecord
   def user_blocked_send_message
     return unless room.room_participants.exists? || !room.room_participants.nil?
 
-    if room.room_participants.where(user_id: user.id, is_blocked: true).present?
-      errors.add(:user_id, 'is blocked to send message')
-    end
+    return unless room.room_participants.where(user_id: user.id, is_blocked: true).present?
+
+    errors.add(:user_id, 'is blocked to send message')
   end
 
   def user_is_participant
-    if room.room_participants.where(user_id: user.id).blank?
-      errors.add(:user_id, 'is not participant')
-    end
+    return unless room.room_participants.where(user_id: user.id).blank?
+
+    errors.add(:user_id, 'is not participant')
   end
 
   def room_closed
-    if room.closed?
-      errors.add(:room_id, 'is closed')
-    end
+    return unless room.closed?
+
+    errors.add(:room_id, 'is closed')
   end
 end

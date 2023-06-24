@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe JwtAuth::TokenProvider, type: :service do # rubocop:todo Metrics/BlockLength
+RSpec.describe JwtAuth::TokenProvider, type: :service do
   describe '.issue_token' do
     let(:user) { create(:user) }
     let(:payload) { { email: user.email, fractal_id: user.fractal_id } }

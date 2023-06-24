@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
+RSpec.describe User, type: :model do
   describe 'database' do
     context 'must be present' do
       it { is_expected.to have_db_column(:name).of_type(:string).with_options(null: false) }
@@ -49,7 +49,7 @@ RSpec.describe User, type: :model do # rubocop:todo Metrics/BlockLength
     it { is_expected.to have_many(:messages).dependent(:destroy) }
   end
 
-  describe 'create user' do # rubocop:todo Metrics/BlockLength
+  describe 'create user' do
     context 'successfully' do
       let!(:user) { build(:user) }
       it { expect(user).to be_valid }

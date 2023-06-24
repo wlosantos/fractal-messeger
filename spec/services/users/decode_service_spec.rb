@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Users::DecodeService do # rubocop:todo Metrics/BlockLength
-  describe '#call' do # rubocop:todo Metrics/BlockLength
+RSpec.describe Users::DecodeService do
+  describe '#call' do
     let(:stubs) { Faraday::Adapter::Test::Stubs.new }
     let(:conn) { Faraday.new { |b| b.adapter(:test, stubs) } }
 
