@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RolifyCreateRoles < ActiveRecord::Migration[7.0] # rubocop:todo Style/Documentation
-  def change # rubocop:todo Metrics/MethodLength
+  def change
     create_table(:roles) do |t|
       t.string :name
       t.references :resource, polymorphic: true
