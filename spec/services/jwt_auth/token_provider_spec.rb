@@ -51,5 +51,11 @@ RSpec.describe JwtAuth::TokenProvider, type: :service do
         expect(described_class.decode_token(subject)).to have_key('email')
       end
     end
+
+    context 'failure' do
+      it 'returns error when token is invalid' do
+        expect { described_class.decode_token('token') }.to raise_error(RuntimeError)
+      end
+    end
   end
 end

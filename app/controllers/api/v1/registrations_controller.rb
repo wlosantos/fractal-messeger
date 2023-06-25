@@ -9,7 +9,7 @@ module Api
         dg_data = Users::DecodeService.call(user_params)
 
         if dg_data
-          app = App.find_or_create_by(dg_app_id: params[:user_appication_id].to_i, name: params[:user_application_name])
+          app = App.find_or_create_by(dg_app_id: params[:user_application_id].to_i, name: params[:user_application_name])
 
           if app
             dg_token = params[:datagateway_token]
