@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :registrations, only: %i[create]
       resources :sessions, only: %i[create]
       resources :users, only: %i[index]
+      resources :apps
     end
   end
 end

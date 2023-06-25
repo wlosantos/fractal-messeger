@@ -37,7 +37,7 @@ class ApplicationPolicy # rubocop:todo Style/Documentation
   end
 
   def permissions?
-    user.has_role?(:admin)
+    user.has_role?(:admin) || user.has_role?(:manager)
   end
 
   def scope

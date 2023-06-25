@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Room, type: :model do # rubocop:todo Metrics/BlockLength
+RSpec.describe Room, type: :model do
   describe 'database' do
     context 'must be present' do
       it { is_expected.to have_db_column(:name).of_type(:string).with_options(null: false) }
