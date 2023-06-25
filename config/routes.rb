@@ -8,7 +8,10 @@ Rails.application.routes.draw do
       resources :registrations, only: %i[create]
       resources :sessions, only: %i[create]
       resources :users, only: %i[index]
-      resources :apps
+      resources :apps do
+        resources :rooms, only: %i[index create]
+      end
+      resources :rooms, only: %i[show update destroy]
     end
   end
 end
