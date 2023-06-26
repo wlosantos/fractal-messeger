@@ -147,108 +147,108 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
     end
   end
 
-  # describe "POST /participants" do
-  #   let!(:room) { create(:room, app: @app) }
-  #   before { post "/api/rooms/#{room.id}/participants", params: { room_participant: participant }.to_json, headers: }
+  describe 'POST /participants' do
+    let!(:room) { create(:room, app: @app) }
+    before { post "/api/rooms/#{room.id}/participants", params: { room_participant: participant }.to_json, headers: }
 
-  #   context "successfully" do
-  #     let(:participant) { build(:room_participant, room:, user: create(:user)).attributes }
+    context 'successfully' do
+      let(:participant) { build(:room_participant, room:, user: create(:user)).attributes }
 
-  #     it "returns status code created" do
-  #       expect(response).to have_http_status(:created)
-  #     end
+      it 'returns status code created' do
+        expect(response).to have_http_status(:created)
+      end
 
-  #     it "returns the created participant" do
-  #       expect(json_body[:user_id]).to eq(participant[:user_id])
-  #     end
-  #   end
+      it 'returns the created participant' do
+        expect(json_body[:user_id]).to eq(participant['user_id'])
+      end
+    end
 
-  #   context "when the room does not exist" do
-  #     before { post "/api/rooms/0/participants", params: { room_participant: participant }.to_json, headers: }
+    context 'when the room does not exist' do
+      before { post '/api/rooms/0/participants', params: { room_participant: participant }.to_json, headers: }
 
-  #     let(:participant) { build(:room_participant, room:, user: create(:user)).attributes }
+      let(:participant) { build(:room_participant, room:, user: create(:user)).attributes }
 
-  #     it "returns status code not found" do
-  #       expect(response).to have_http_status(:not_found)
-  #     end
-  #   end
+      it 'returns status code not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
 
-  #   context "when user is already a participant" do
-  #     let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
-  #     let(:participant) { build(:room_participant, room:, user: room_participant.user).attributes }
+    context 'when user is already a participant' do
+      let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
+      let(:participant) { build(:room_participant, room:, user: room_participant.user).attributes }
 
-  #     it "returns status code unprocessable_entity" do
-  #       expect(response).to have_http_status(:unprocessable_entity)
-  #     end
+      it 'returns status code unprocessable_entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
 
-  #     it "returns the json data for the errors" do
-  #       expect(json_body).to have_key(:errors)
-  #     end
+      it 'returns the json data for the errors' do
+        expect(json_body).to have_key(:errors)
+      end
 
-  #     it "returns the error message" do
-  #       expect(json_body[:message]).to include("already exists")
-  #     end
-  #   end
-  # end
+      it 'returns the error message' do
+        expect(json_body[:errors][:message]).to include('already exists')
+      end
+    end
+  end
 
-  # describe "DELETE /participants" do
-  #   let!(:room) { create(:room, app: @app) }
-  #   let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
-  #   before { delete "/api/rooms/#{room.id}/participants/#{room_participant.id}", params: {}, headers: }
+  describe 'DELETE /participants' do
+    let!(:room) { create(:room, app: @app) }
+    let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
+    before { delete "/api/rooms/#{room.id}/participants/#{room_participant.id}", params: {}, headers: }
 
-  #   context "successfully" do
-  #     it "returns status code no_content" do
-  #       expect(response).to have_http_status(:no_content)
-  #     end
-  #   end
+    context 'successfully' do
+      it 'returns status code no_content' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
 
-  #   context "when the room does not exist" do
-  #     before { delete "/api/rooms/0/participants/#{room_participant.id}", params: {}, headers: }
+    context 'when the room does not exist' do
+      before { delete "/api/rooms/0/participants/#{room_participant.id}", params: {}, headers: }
 
-  #     it "returns status code not found" do
-  #       expect(response).to have_http_status(:not_found)
-  #     end
-  #   end
+      it 'returns status code not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
 
-  #   context "when the participant does not exist" do
-  #     before { delete "/api/rooms/#{room.id}/participants/0", params: {}, headers: }
+    context 'when the participant does not exist' do
+      before { delete "/api/rooms/#{room.id}/participants/0", params: {}, headers: }
 
-  #     it "returns status code not found" do
-  #       expect(response).to have_http_status(:not_found)
-  #     end
-  #   end
-  # end
+      it 'returns status code not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 
-  # describe "PUT /participants" do
-  #   let!(:room) { create(:room, app: @app) }
-  #   let!(:room_participant) { create(:room_participant, room:, user: create(:user), is_moderator: true) }
+  describe 'PUT /participants' do
+    let!(:room) { create(:room, app: @app) }
+    let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
 
-  #   context "successfully" do
-  #     before { put "/api/rooms/#{room.id}/participants/#{room_participant.id}", params: {}, headers: }
+    context 'successfully' do
+      before { put "/api/rooms/#{room.id}/participants/#{room_participant.id}", params: {}, headers: }
 
-  #     it "returns status code success" do
-  #       expect(response).to have_http_status(:success)
-  #     end
+      it 'returns status code success' do
+        expect(response).to have_http_status(:success)
+      end
 
-  #     it "returns the updated participant" do
-  #       expect(json_body[:moderator]).to eq(!room_participant.is_moderator)
-  #     end
-  #   end
+      it 'returns the updated participant' do
+        expect(json_body[:is_blocked]).to eq(!room_participant.is_blocked)
+      end
+    end
 
-  #   context "when the room does not exist" do
-  #     before { put "/api/rooms/0/participants/#{room_participant.id}", params: {}, headers: }
+    context 'when the room does not exist' do
+      before { put "/api/rooms/0/participants/#{room_participant.id}", params: {}, headers: }
 
-  #     it "returns status code not found" do
-  #       expect(response).to have_http_status(:not_found)
-  #     end
-  #   end
+      it 'returns status code not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
 
-  #   context "when the participant does not exist" do
-  #     before { put "/api/rooms/#{room.id}/participants/0", params: {}, headers: }
+    context 'when the participant does not exist' do
+      before { put "/api/rooms/#{room.id}/participants/0", params: {}, headers: }
 
-  #     it "returns status code not found" do
-  #       expect(response).to have_http_status(:not_found)
-  #     end
-  #   end
-  # end
+      it 'returns status code not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

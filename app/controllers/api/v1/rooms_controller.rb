@@ -3,8 +3,8 @@
 module Api
   module V1
     class RoomsController < ApplicationController
-      before_action :set_room, only: %i[show update destroy participants add_participant remove_participant change_role]
-      before_action :set_room_participant, only: %i[remove_participant change_role]
+      before_action :set_room, only: %i[show update destroy participants add_participant remove_participant change_blocked]
+      before_action :set_room_participant, only: %i[remove_participant change_blocked]
 
       def index
         app = App.find(params[:app_id])
@@ -69,8 +69,8 @@ module Api
         head 204
       end
 
-      def change_role
-        @room_participant.update(is_moderator: !@room_participant.is_moderator)
+      def change_blocked
+        @room_participant.update(is_blocked: !@room_participant.is_blocked)
         render json: @room_participant, status: :ok
       end
 
