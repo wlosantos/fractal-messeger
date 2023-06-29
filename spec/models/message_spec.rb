@@ -73,4 +73,17 @@ RSpec.describe Message, type: :model do
       it { expect(message.errors.full_messages).to include('Room is closed') }
     end
   end
+
+  describe 'delete message' do
+    let!(:room) { create(:room) }
+    let(:participant) { create(:room_participant, room:) }
+
+    context 'when message was created less than 5 minutes ago' do
+      let!(:message) { create(:message, room:, user: participant.user) }
+      before { message.destroy }
+      it 'message is deleted' do
+        expect(message).to_not eq(Message.where(id: message.id).first)
+      end
+    end
+  end
 end

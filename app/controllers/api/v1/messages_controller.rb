@@ -7,7 +7,7 @@ module Api
 
       def create
         room = Room.where(id: params[:room_id]).first
-        if room.present?
+        if room.present? && !room.read_only?
           message = current_user.messages.build(message_params.merge(room:))
 
           if message.save
@@ -16,19 +16,12 @@ module Api
             render json: { errors: message.errors }, status: :unprocessable_entity
           end
         else
-          render json: { errors: 'Room not found' }, status: :not_found
-        end
-      end
-
-      def update
-        if @message.update(message_params)
-          render json: @message, status: :ok
-        else
-          render json: { errors: @message.errors }, status: :unprocessable_entity
+          render json: { errors: 'Room dont exist, closed, or is read only' }, status: :not_found
         end
       end
 
       def destroy
+        authorize @message
         @message.destroy
         head :no_content
       end

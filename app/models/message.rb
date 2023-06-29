@@ -9,7 +9,7 @@ class Message < ApplicationRecord
   enum status_moderation: { blank: 0, pending: 1, approved: 2, refused: 3 }
 
   validates :content, presence: true, length: { maximum: 240 }
-  validate :message_permitted, on: %i[create update]
+  validate :message_permitted, on: %i[create]
 
   def message_permitted
     user_blocked_send_message
