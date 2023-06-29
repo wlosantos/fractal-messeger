@@ -14,7 +14,8 @@ module Api
 
       def show
         app = App.find(params[:id])
-        render json: app, status: :ok
+        authorize app
+        render json: app, serializer: AppSerializer, show_rooms: true, status: :ok
       end
 
       def create

@@ -3,8 +3,9 @@
 module Api
   module V1
     class RoomsController < ApplicationController
-      before_action :set_room, only: %i[show update destroy participants add_participant remove_participant change_blocked]
-      before_action :set_room_participant, only: %i[remove_participant change_blocked]
+      before_action :set_room,
+                    only: %i[show update destroy participants add_participant remove_participant change_blocked change_moderator]
+      before_action :set_room_participant, only: %i[remove_participant change_blocked change_moderator]
 
       def index
         app = App.find(params[:app_id])
@@ -16,8 +17,7 @@ module Api
 
       def show
         authorize @room
-        # render json: @room, serializer: RoomSerializer, show_messager: true, status: :ok
-        render json: @room, status: :ok
+        render json: @room, serializer: RoomSerializer, show_messager: true, status: :ok
       end
 
       def create
@@ -74,6 +74,16 @@ module Api
         render json: @room_participant, status: :ok
       end
 
+      def change_moderator
+        if @room_participant.user.rooms_moderators.exists?(id: @room.id)
+          @room_participant.user.rooms_moderators.delete(@room)
+          render json: { message: 'Moderator removed' }, status: :ok
+        else
+          @room_participant.user.rooms_moderators << @room
+          render json: { message: 'Moderator added' }, status: :ok
+        end
+      end
+
       private
 
       def set_room
@@ -93,7 +103,7 @@ module Api
       end
 
       def room_participant_params
-        params.require(:room_participant).permit(:user_id, :is_moderator, :is_blocked)
+        params.require(:room_participant).permit(:user_id, :is_blocked)
       end
     end
   end

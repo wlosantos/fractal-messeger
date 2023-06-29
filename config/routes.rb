@@ -19,6 +19,10 @@ Rails.application.routes.draw do
           put '/participants/:room_participant', to: 'rooms#change_blocked'
         end
 
+        member do
+          put '/moderators/:room_participant', to: 'rooms#change_moderator'
+        end
+
         resources :messages, only: %i[create]
       end
       resources :messages, only: %i[destroy]

@@ -6,7 +6,7 @@ class AppPolicy < ApplicationPolicy
   end
 
   def show?
-    permissions?
+    permissions? || user.has_role?(:manager)
   end
 
   def create?

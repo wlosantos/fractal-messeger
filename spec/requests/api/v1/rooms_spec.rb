@@ -251,4 +251,36 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
       end
     end
   end
+
+  describe 'PUT /moderators' do
+    let!(:room) { create(:room, app: @app) }
+    let!(:room_participant) { create(:room_participant, room:, user:) }
+
+    context 'added user with moderator' do
+      let(:user) { create(:user) }
+      before { put "/api/rooms/#{room.id}/moderators/#{room_participant.id}", params: {}, headers: }
+
+      it 'returns status code success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'returns the updated participant' do
+        expect(json_body[:message]).to include('Moderator added')
+      end
+    end
+
+    context 'when removing moderator' do
+      let(:user) { create(:user) }
+      before { user.rooms_moderators << room }
+      before { put "/api/rooms/#{room.id}/moderators/#{room_participant.id}", params: {}, headers: }
+
+      it 'returns status code success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'returns the updated participant' do
+        expect(json_body[:message]).to include('Moderator removed')
+      end
+    end
+  end
 end
