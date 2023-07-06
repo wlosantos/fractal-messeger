@@ -9,6 +9,7 @@ gem 'rails', '~> 7.0.5'
 # gem "pg", "~> 1.1"
 gem 'puma', '~> 5.0'
 gem 'sqlite3', '~> 1.4'
+gem 'redis', '~> 4.0'
 
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'

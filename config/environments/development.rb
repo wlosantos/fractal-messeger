@@ -19,6 +19,10 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
+  # Enable action cable api server
+  # config.action_cable.url = 'ws://localhost:3000/cable'
+  # config.action_cable.disable_request_forgery_protection = true
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp/caching-dev.txt').exist?
