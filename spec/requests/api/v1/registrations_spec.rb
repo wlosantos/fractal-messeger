@@ -9,7 +9,7 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
 
   let(:headers) do
     {
-      'Accept' => 'application/vnd.messeger-fractal.v1',
+      'Accept' => 'application/vnd.fractal-messeger.v1',
       'Content-Type' => Mime[:json].to_s
     }
   end

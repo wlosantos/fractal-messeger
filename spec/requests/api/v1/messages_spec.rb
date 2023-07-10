@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Messages', type: :request do
-  before { host! 'messeger-fractal.com.br' }
+  before { host! 'fractal-messeger.com.br' }
   before { @room = create(:room) }
   let(:admin) { create(:user, :admin, name: 'Reginaldo Perine') }
   let!(:participant) { create(:room_participant, room: @room, user: admin) }
   let(:token) { JwtAuth::TokenProvider.issue_token({ email: admin.email, fractal_id: admin.fractal_id }) }
   let(:headers) do
     {
-      'Accept' => 'application/vnd.messeger-fractal.v1',
+      'Accept' => 'application/vnd.fractal-messeger.v1',
       'Content-Type' => Mime[:json].to_s,
       'Authorization' => "Bearer #{token}"
     }

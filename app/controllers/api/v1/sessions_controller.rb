@@ -11,7 +11,7 @@ module Api
         if user&.fractal_id == params[:fractal_id]
           token = JwtAuth::TokenProvider.issue_token({ email: user.email, fractal_id: user.fractal_id })
           response.headers['Authorization'] = "Bearer #{token}"
-          render json: { token: }, status: :ok
+          render json: { token:, roles: user.roles.map(&:name) }, status: :ok
         else
           render json: { error: 'Invalid credentials' }, status: :unauthorized
         end

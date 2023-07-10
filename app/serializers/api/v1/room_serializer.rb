@@ -44,10 +44,11 @@ module Api
         if @instance_options[:show_messager]
           hash[:messages] = object.messages.map do |message|
             {
-              userId: message.id,
+              id: message.id,
+              userId: message.user_id,
               author: message.user.name,
               content: message.content,
-              createdAt: message.created_at.strftime('%d/%m/%Y %H:%M:%S')
+              createdAt: message.created_at.strftime('%d/%m/%Y %H:%M')
             }
           end
         end

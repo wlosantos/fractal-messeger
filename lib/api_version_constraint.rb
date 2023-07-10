@@ -7,6 +7,6 @@ class ApiVersionConstraint # rubocop:todo Style/Documentation
   end
 
   def matches?(req)
-    @default || req.headers['Accept'].include?("application/vnd.messenger-fractal.v#{@version}")
+    @default || req.headers['Accept'].include?("application/vnd.fractal-messeger.v#{@version}")
   end
 end

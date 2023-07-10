@@ -5,7 +5,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     email { "#{name.split(' ').join('-')}@" + Faker::Internet.domain_name }
     fractal_id { rand(1_000..10_000).to_s }
-    dg_token { Faker::Lorem.sentence(word_count: 6).split(' ').join('-').downcase }
+    dg_token { Faker::Crypto.sha256 }
     app
 
     trait :admin do

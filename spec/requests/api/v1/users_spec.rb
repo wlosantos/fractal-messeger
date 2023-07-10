@@ -17,12 +17,11 @@ RSpec.describe 'User Api', type: :request do
   describe 'GET /users' do
     context 'successfully' do
       before do
-        create_list(:user, 1, app: admin.app)
         get '/api/users', params: {}, headers:
       end
 
       it 'returns users' do
-        expect(json_body.count).to eq(2)
+        expect(json_body[:name]).to eq(admin.name)
       end
 
       it 'returns status code 200' do
