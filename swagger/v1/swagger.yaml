@@ -237,6 +237,76 @@ paths:
               required:
               - email
               - fractal_id
+  "/api/rooms/{id}/messages":
+    post:
+      summary: Create message
+      tags:
+      - Messages
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: message created
+        '401':
+          description: unauthorized
+        '404':
+          description: room not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      example: Hello World!
+                    status_modeator:
+                      type: string
+                      example: blank
+                    moderated_at:
+                      type: string
+                      example:
+                    refused_at:
+                      type: string
+                      example:
+                    parent_id:
+                      type: integer
+                      example:
+                  required:
+                  - content
+                  - status_moderator
+                  - moderated_at
+                  - refused_at
+                  - parent_id
+              required:
+              - message
+        required: true
+        description: Message params
+  "/api/messages/{id}":
+    delete:
+      summary: Destroy message
+      tags:
+      - Messages
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: message destroyed
   "/api/apps/{id}/rooms":
     get:
       summary: List all rooms
@@ -870,7 +940,7 @@ paths:
           description: Unauthorized
   "/api/rooms/{id}/moderators/{participant_id}":
     put:
-      summary: Add moderator participant to a room
+      summary: Add ou remove moderator participant to a room
       tags:
       - Rooms
       security:
@@ -891,5 +961,17 @@ paths:
       responses:
         '200':
           description: Participant added as moderator
+  "/api/users":
+    get:
+      summary: User data
+      tags:
+      - Users
+      security:
+      - Bearer: {}
+      responses:
+        '200':
+          description: User data
+        '401':
+          description: Unauthorized
 servers:
 - url: http://localhost:3001
