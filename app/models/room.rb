@@ -16,6 +16,8 @@ class Room < ApplicationRecord # rubocop:todo Style/Documentation
   validates :closed_at, presence: true, if: :closed?
   validates :closed, inclusion: { in: [true, false] }
 
+  after_create_commit :create_room_participant
+
   def closed?
     closed
   end
@@ -30,5 +32,12 @@ class Room < ApplicationRecord # rubocop:todo Style/Documentation
 
   def open!
     update!(closed: false, closed_at: nil) if help_desk? && closed?
+  end
+
+  private
+
+  def create_room_participant
+    room_participants.create!(user: create_by, is_blocked: false)
+    moderators << create_by
   end
 end

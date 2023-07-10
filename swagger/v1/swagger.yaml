@@ -237,5 +237,236 @@ paths:
               required:
               - email
               - fractal_id
+  "/api/apps/{id}/rooms":
+    get:
+      summary: List all rooms
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: App ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List all rooms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: Room 1
+                    kind:
+                      type: string
+                      example: public
+                    create_by:
+                      type: string
+                      example: Wendel Lopes
+                    read_only:
+                      type: boolean
+                      example: false
+                    moderated:
+                      type: boolean
+                      example: false
+                    app:
+                      type: string
+                      example: Fractal
+                    status:
+                      type: string
+                      example: open
+                    moderators:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Wendel Lopes
+                        required:
+                        - userId
+                        - name
+                    participants:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          RoomParticipantId:
+                            type: integer
+                            example: 1
+                          userId:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Wendel Lopes
+                          moderator:
+                            type: boolean
+                            example: false
+                          blocked:
+                            type: boolean
+                            example: false
+                        required:
+                        - RoomParticipantId
+                        - userId
+                        - name
+                        - moderator
+                        - blocked
+                  required:
+                  - id
+                  - name
+                  - kind
+                  - create_by
+                  - read_only
+                  - moderated
+                  - app
+                  - status
+                  - moderators
+                  - participants
+        '401':
+          description: Unauthorized
+        '404':
+          description: App not found
+  "/api/rooms/{id}":
+    get:
+      summary: Show selected room
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Show selected room
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Room 1
+                  kind:
+                    type: string
+                    example: groups
+                  create_by:
+                    type: string
+                    example: Wendel Lopes
+                  read_only:
+                    type: boolean
+                    example: false
+                  moderated:
+                    type: boolean
+                    example: false
+                  app:
+                    type: string
+                    example: Fractal
+                  status:
+                    type: string
+                    example: open
+                  moderators:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                      required:
+                      - userId
+                      - name
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        RoomParticipantId:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                        moderator:
+                          type: boolean
+                          example: false
+                        blocked:
+                          type: boolean
+                          example: false
+                      required:
+                      - RoomParticipantId
+                      - userId
+                      - name
+                      - moderator
+                      - blocked
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        author:
+                          type: string
+                          example: Wendel Lopes
+                        content:
+                          type: string
+                          example: Hello World
+                        createdAt:
+                          type: string
+                          example: '2020-10-10T00:00:00.000Z'
+                      required:
+                      - id
+                      - userId
+                      - author
+                      - content
+                      - createdAt
+                required:
+                - id
+                - name
+                - kind
+                - create_by
+                - read_only
+                - moderated
+                - app
+                - status
+                - moderators
+                - participants
+                - messages
+        '401':
+          description: Unauthorized
+        '404':
+          description: Room not found
 servers:
 - url: http://localhost:3001

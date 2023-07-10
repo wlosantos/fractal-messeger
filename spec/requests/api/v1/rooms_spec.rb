@@ -16,7 +16,8 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'GET /index' do
-    let!(:rooms) { create_list(:room, 5, app: @app) }
+    let!(:rooms) { create(:room, app: @app, create_by: admin) }
+    # let!(:participant) { create(:room_participant, room: rooms, user: admin) }
     before { get "/api/apps/#{@app.id}/rooms", params: {}, headers: }
 
     context 'successfully' do
@@ -25,13 +26,13 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
       end
 
       it 'returns a list of rooms' do
-        expect(json_body.count).to eq(5)
+        expect(json_body.count).to eq(1)
       end
     end
   end
 
   describe 'GET /show' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     before { get "/api/rooms/#{room.id}", params: {}, headers: }
 
     context 'successfully' do
@@ -81,7 +82,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'PUT /update' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     before { put "/api/rooms/#{room.id}", params: { room: room_params }.to_json, headers: }
 
     context 'successfully' do
@@ -120,7 +121,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'DELETE /destroy' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     before { delete "/api/rooms/#{room.id}", params: {}, headers: }
 
     context 'successfully' do
@@ -148,7 +149,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'POST /participants' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     before { post "/api/rooms/#{room.id}/participants", params: { room_participant: participant }.to_json, headers: }
 
     context 'successfully' do
@@ -192,7 +193,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'DELETE /participants' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
     before { delete "/api/rooms/#{room.id}/participants/#{room_participant.id}", params: {}, headers: }
 
@@ -220,7 +221,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'PUT /participants' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     let!(:room_participant) { create(:room_participant, room:, user: create(:user)) }
 
     context 'successfully' do
@@ -253,7 +254,7 @@ RSpec.describe 'Api::V1::Rooms', type: :request do
   end
 
   describe 'PUT /moderators' do
-    let!(:room) { create(:room, app: @app) }
+    let!(:room) { create(:room, app: @app, create_by: admin) }
     let!(:room_participant) { create(:room_participant, room:, user:) }
 
     context 'added user with moderator' do

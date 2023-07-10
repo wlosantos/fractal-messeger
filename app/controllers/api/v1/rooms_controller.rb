@@ -8,11 +8,14 @@ module Api
       before_action :set_room_participant, only: %i[remove_participant change_blocked change_moderator]
 
       def index
-        app = App.find(params[:app_id])
-        rooms = current_user.has_role?(:admin) ? Room.all : app.rooms.where(create_by_id: current_user.id)
+        app = App.where(id: params[:app_id]).first
+        if app.present?
+          rooms = current_user.rooms.joins(:room_participants, :app).where(app_id: app.id)
 
-        authorize rooms
-        render json: rooms, status: :ok
+          render json: rooms, status: :ok
+        else
+          render json: { errors: { message: 'App not found' } }, status: :not_found
+        end
       end
 
       def show
@@ -87,7 +90,7 @@ module Api
       private
 
       def set_room
-        @room = Room.find(params[:id])
+        @room = current_user.rooms.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         head 404
       end
