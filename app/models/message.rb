@@ -11,6 +11,8 @@ class Message < ApplicationRecord
   validates :content, presence: true, length: { maximum: 240 }
   validate :message_permitted, on: %i[create]
 
+  after_create_commit { MessageBroadcastJob.perform_later(self) }
+
   def message_permitted
     user_blocked_send_message
     user_is_participant

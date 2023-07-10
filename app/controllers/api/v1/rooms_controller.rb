@@ -9,7 +9,7 @@ module Api
 
       def index
         app = App.find(params[:app_id])
-        rooms = current_user.has_role?(:admin) ? Room.all : app.rooms.where(origin_id: current_user.id)
+        rooms = current_user.has_role?(:admin) ? Room.all : app.rooms.where(create_by_id: current_user.id)
 
         authorize rooms
         render json: rooms, status: :ok

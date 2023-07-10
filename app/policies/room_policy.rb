@@ -2,22 +2,22 @@
 
 class RoomPolicy < ApplicationPolicy
   def index?
-    permissions? || user == record.origin
+    permissions? || user == record.create_by
   end
 
   def show?
-    permissions? || user == record.origin
+    permissions? || user == record.create_by
   end
 
   def create?
-    permissions? || user == record.origin
+    permissions? || user == record.create_by
   end
 
   def update?
-    permissions? || user == record.origin
+    permissions? || user == record.create_by
   end
 
   def destroy?
-    permissions? || user == record.origin
+    permissions? || user == record.create_by
   end
 end
