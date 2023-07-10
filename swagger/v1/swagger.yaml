@@ -1,0 +1,84 @@
+---
+openapi: 3.0.1
+info:
+  title: Messeger Fractal API V1
+  version: v1
+  description: API to integration with App by Fractal Tecnologia
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      scheme: bearer
+      bearerFormat: JWT
+      name: Authorization
+      in: header
+security:
+- Bearer: []
+paths:
+  "/api/registrations":
+    post:
+      summary: Create a new user
+      tags:
+      - Auth - Registrations
+      parameters: []
+      responses:
+        '201':
+          description: User created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_application_id:
+                  type: integer
+                  example: 2
+                user_application_name:
+                  type: string
+                  example: Bertoni
+                datagateway_token:
+                  type: string
+                  example: b30c50a18d-40eccaae91-1685622812
+                url:
+                  type: string
+                  example: https://staging.datagateway.fractaltecnologia.com.br
+  "/api/sessions":
+    post:
+      summary: Creates a session
+      tags:
+      - Auth - Sessions
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9
+        '401':
+          description: Invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: wendel.lopes@fractaltecnologia.com.br
+                fractal_id:
+                  type: string
+                  example: '10006'
+              required:
+              - email
+              - fractal_id
+servers:
+- url: http://localhost:3001
