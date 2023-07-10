@@ -429,4 +429,75 @@ RSpec.describe 'Rooms API' do
       end
     end
   end
+
+  # remove participant
+  path '/api/rooms/{id}/participants/{participant_id}' do
+    delete 'Remove participant from a room' do
+      tags 'Rooms'
+      security [Bearer: {}]
+
+      consumes 'application/json'
+
+      parameter name: :id, in: :path, type: :string, required: true, description: 'Room ID'
+      parameter name: :participant_id, in: :path, type: :string, required: true, description: 'Participant ID'
+
+      response '204', 'Participant removed' do
+        let(:Authorization) { "Bearer #{token}" }
+        before { @room = create(:room, app: @app, create_by: admin) }
+        let(:id) { @room.id }
+        let(:participant_id) { @room.room_participants.first.id }
+        run_test!
+      end
+    end
+  end
+
+  # block participant
+  path '/api/rooms/{id}/participants/{participant_id}' do
+    put 'Block or unblocked participant from a room' do
+      tags 'Rooms'
+      security [Bearer: {}]
+
+      consumes 'application/json'
+
+      parameter name: :id, in: :path, type: :string, required: true, description: 'Room ID'
+      parameter name: :participant_id, in: :path, type: :string, required: true, description: 'Participant ID'
+
+      response '200', 'blocked or unblocked Participant' do
+        let(:Authorization) { "Bearer #{token}" }
+        before { @room = create(:room, app: @app, create_by: admin) }
+        let(:id) { @room.id }
+        let(:participant_id) { @room.room_participants.first.id }
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
+        before { @room = create(:room, app: @app, create_by: admin) }
+        let(:id) { @room.id }
+        let(:participant_id) { create(:room_participant, room: @room).id }
+        let(:Authorization) { nil }
+        run_test!
+      end
+    end
+  end
+
+  # add moderator participant
+  path '/api/rooms/{id}/moderators/{participant_id}' do
+    put 'Add moderator participant to a room' do
+      tags 'Rooms'
+      security [Bearer: {}]
+
+      consumes 'application/json'
+
+      parameter name: :id, in: :path, type: :string, required: true, description: 'Room ID'
+      parameter name: :participant_id, in: :path, type: :string, required: true, description: 'Participant ID'
+
+      response '200', 'Participant added as moderator' do
+        let(:Authorization) { "Bearer #{token}" }
+        before { @room = create(:room, app: @app, create_by: admin) }
+        let(:id) { @room.id }
+        let(:participant_id) { @room.room_participants.first.id }
+        run_test!
+      end
+    end
+  end
 end
