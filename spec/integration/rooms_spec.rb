@@ -482,7 +482,7 @@ RSpec.describe 'Rooms API' do
 
   # add moderator participant
   path '/api/rooms/{id}/moderators/{participant_id}' do
-    put 'Add moderator participant to a room' do
+    put 'Add ou remove moderator participant to a room' do
       tags 'Rooms'
       security [Bearer: {}]
 

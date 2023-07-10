@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RoomParticipant < ApplicationRecord # rubocop:todo Style/Documentation
+class RoomParticipant < ApplicationRecord
   belongs_to :user
   belongs_to :room
 

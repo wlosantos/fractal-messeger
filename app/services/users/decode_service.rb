@@ -3,7 +3,7 @@
 require 'faraday'
 
 module Users
-  class DecodeService < ApplicationService # rubocop:todo Style/Documentation
+  class DecodeService < ApplicationService
     attr_accessor :user_application_id, :datagateway_token, :url, :conn
 
     def initialize(args, conn = nil) # rubocop:todo Lint/MissingSuper

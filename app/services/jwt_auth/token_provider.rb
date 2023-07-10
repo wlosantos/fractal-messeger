@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module JwtAuth
-  class TokenProvider # rubocop:todo Style/Documentation
+  class TokenProvider
     ALGORITHM = 'HS256'
 
     def self.issue_token(payload)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationPolicy # rubocop:todo Style/Documentation
+class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -44,7 +44,7 @@ class ApplicationPolicy # rubocop:todo Style/Documentation
     Pundit.policy_scope!(user, record.class)
   end
 
-  class Scope # rubocop:todo Style/Documentation
+  class Scope
     def initialize(user, scope)
       @user = user
       @scope = scope
