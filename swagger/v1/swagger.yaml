@@ -1,0 +1,977 @@
+---
+openapi: 3.0.1
+info:
+  title: Messeger Fractal API V1
+  version: v1
+  description: API to integration with App by Fractal Tecnologia
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      scheme: bearer
+      bearerFormat: JWT
+      name: Authorization
+      in: header
+security:
+- Bearer: []
+paths:
+  "/api/apps":
+    get:
+      summary: List all apps
+      tags:
+      - Apps
+      security:
+      - Bearer: {}
+      responses:
+        '200':
+          description: Index app
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bertoni Med
+                  app_id:
+                    type: integer
+                    example: 30
+                  contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Renato Freire
+                        email:
+                          type: string
+                          example: renato@freire.com
+                        fractalId:
+                          type: string
+                          example: '10006'
+                      required:
+                      - id
+                      - name
+                      - email
+                      - fractalId
+                required:
+                - id
+                - name
+                - app_id
+                - contacts
+        '401':
+          description: Unauthorized
+  "/api/apps/{id}":
+    get:
+      summary: Show app
+      tags:
+      - Apps
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: app id
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: app found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bertoni Med
+                  app_id:
+                    type: integer
+                    example: 30
+                  contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Renato Freire
+                        email:
+                          type: string
+                          example: renato@freire.com
+                        fractalId:
+                          type: string
+                          example: '10006'
+                      required:
+                      - id
+                      - name
+                      - email
+                      - fractalId
+                  rooms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Room 1
+                        kind:
+                          type: string
+                          example: groups
+                        createBy:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Renato Freire
+                            email:
+                              type: string
+                              example: renato@email.com
+                            permitions:
+                              type: array
+                              items:
+                                type: string
+                                example: admin
+                          required:
+                          - id
+                          - name
+                          - email
+                          - permitions
+                      required:
+                      - id
+                      - name
+                      - kind
+                      - createBy
+                required:
+                - id
+                - name
+                - app_id
+                - contacts
+                - rooms
+        '404':
+          description: app not found
+        '401':
+          description: Unauthorized
+  "/api/registrations":
+    post:
+      summary: Create a new user
+      tags:
+      - Auth - Registrations
+      parameters: []
+      responses:
+        '201':
+          description: User created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_application_id:
+                  type: integer
+                  example: 2
+                user_application_name:
+                  type: string
+                  example: Bertoni
+                datagateway_token:
+                  type: string
+                  example: b30c50a18d-40eccaae91-1685622812
+                url:
+                  type: string
+                  example: https://staging.datagateway.fractaltecnologia.com.br
+  "/api/sessions":
+    post:
+      summary: Creates a session
+      tags:
+      - Auth - Sessions
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9
+        '401':
+          description: Invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: wendel.lopes@fractaltecnologia.com.br
+                fractal_id:
+                  type: string
+                  example: '10006'
+              required:
+              - email
+              - fractal_id
+  "/api/rooms/{id}/messages":
+    post:
+      summary: Create message
+      tags:
+      - Messages
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: message created
+        '401':
+          description: unauthorized
+        '404':
+          description: room not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      example: Hello World!
+                    status_modeator:
+                      type: string
+                      example: blank
+                    moderated_at:
+                      type: string
+                      example:
+                    refused_at:
+                      type: string
+                      example:
+                    parent_id:
+                      type: integer
+                      example:
+                  required:
+                  - content
+                  - status_moderator
+                  - moderated_at
+                  - refused_at
+                  - parent_id
+              required:
+              - message
+        required: true
+        description: Message params
+  "/api/messages/{id}":
+    delete:
+      summary: Destroy message
+      tags:
+      - Messages
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: message destroyed
+  "/api/apps/{id}/rooms":
+    get:
+      summary: List all rooms
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: App ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List all rooms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: Room 1
+                    kind:
+                      type: string
+                      example: public
+                    create_by:
+                      type: string
+                      example: Wendel Lopes
+                    read_only:
+                      type: boolean
+                      example: false
+                    moderated:
+                      type: boolean
+                      example: false
+                    app:
+                      type: string
+                      example: Fractal
+                    status:
+                      type: string
+                      example: open
+                    moderators:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Wendel Lopes
+                        required:
+                        - userId
+                        - name
+                    participants:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          RoomParticipantId:
+                            type: integer
+                            example: 1
+                          userId:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Wendel Lopes
+                          moderator:
+                            type: boolean
+                            example: true
+                          blocked:
+                            type: boolean
+                            example: false
+                        required:
+                        - RoomParticipantId
+                        - userId
+                        - name
+                        - moderator
+                        - blocked
+                  required:
+                  - id
+                  - name
+                  - kind
+                  - create_by
+                  - read_only
+                  - moderated
+                  - app
+                  - status
+                  - moderators
+                  - participants
+        '401':
+          description: Unauthorized
+        '404':
+          description: App not found
+    post:
+      summary: Create a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: App ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Room created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Room 1
+                  kind:
+                    type: string
+                    example: privates
+                  create_by:
+                    type: string
+                    example: Wendel Lopes
+                  read_only:
+                    type: boolean
+                    example: false
+                  moderated:
+                    type: boolean
+                    example: false
+                  app:
+                    type: string
+                    example: Fractal
+                  status:
+                    type: string
+                    example: open
+                  moderators:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                      required:
+                      - userId
+                      - name
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        RoomParticipantId:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                        moderator:
+                          type: boolean
+                          example: false
+                        blocked:
+                          type: boolean
+                          example: false
+                      required:
+                      - RoomParticipantId
+                      - userId
+                      - name
+                      - moderator
+                      - blocked
+                required:
+                - id
+                - name
+                - kind
+                - create_by
+                - read_only
+                - moderated
+                - app
+                - status
+                - moderators
+                - participants
+        '401':
+          description: Unauthorized
+        '422':
+          description: Invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Room 1
+                    kind:
+                      type: string
+                      example: privates
+                    read_only:
+                      type: boolean
+                      example: false
+                    moderated:
+                      type: boolean
+                      example: false
+                    closed:
+                      type: boolean
+                      example: false
+                  required:
+                  - name
+                  - kind
+                  - read_only
+                  - moderated
+                  - closed
+              required:
+              - room
+        required: true
+  "/api/rooms/{id}":
+    get:
+      summary: Show selected room
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Show selected room
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Room 1
+                  kind:
+                    type: string
+                    example: groups
+                  create_by:
+                    type: string
+                    example: Wendel Lopes
+                  read_only:
+                    type: boolean
+                    example: false
+                  moderated:
+                    type: boolean
+                    example: false
+                  app:
+                    type: string
+                    example: Fractal
+                  status:
+                    type: string
+                    example: open
+                  moderators:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                      required:
+                      - userId
+                      - name
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        RoomParticipantId:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                        moderator:
+                          type: boolean
+                          example: false
+                        blocked:
+                          type: boolean
+                          example: false
+                      required:
+                      - RoomParticipantId
+                      - userId
+                      - name
+                      - moderator
+                      - blocked
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        author:
+                          type: string
+                          example: Wendel Lopes
+                        content:
+                          type: string
+                          example: Hello World
+                        createdAt:
+                          type: string
+                          example: '2020-10-10T00:00:00.000Z'
+                      required:
+                      - id
+                      - userId
+                      - author
+                      - content
+                      - createdAt
+                required:
+                - id
+                - name
+                - kind
+                - create_by
+                - read_only
+                - moderated
+                - app
+                - status
+                - moderators
+                - participants
+                - messages
+        '401':
+          description: Unauthorized
+        '404':
+          description: Room not found
+    put:
+      summary: Update a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Room updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Room 1
+                  kind:
+                    type: string
+                    example: privates
+                  create_by:
+                    type: string
+                    example: Wendel Lopes
+                  read_only:
+                    type: boolean
+                    example: false
+                  moderated:
+                    type: boolean
+                    example: false
+                  app:
+                    type: string
+                    example: Fractal
+                  status:
+                    type: string
+                    example: open
+                  moderators:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                      required:
+                      - userId
+                      - name
+                  participants:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        RoomParticipantId:
+                          type: integer
+                          example: 1
+                        userId:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Wendel Lopes
+                        moderator:
+                          type: boolean
+                          example: false
+                        blocked:
+                          type: boolean
+                          example: false
+                      required:
+                      - RoomParticipantId
+                      - userId
+                      - name
+                      - moderator
+                      - blocked
+                required:
+                - id
+                - name
+                - kind
+                - create_by
+                - read_only
+                - moderated
+                - app
+                - status
+                - moderators
+                - participants
+        '401':
+          description: Unauthorized
+        '404':
+          description: Invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Room 1
+                    kind:
+                      type: string
+                      example: privates
+                    read_only:
+                      type: boolean
+                      example: false
+                    moderated:
+                      type: boolean
+                      example: false
+                  required:
+                  - name
+                  - kind
+                  - read_only
+                  - moderated
+                  - closed
+              required:
+              - room
+        required: true
+    delete:
+      summary: Delete a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Room deleted
+        '401':
+          description: Unauthorized
+  "/api/rooms/{id}/participants":
+    post:
+      summary: Add participant to a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Participant added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  user_id:
+                    type: integer
+                    example: 1
+                  room_id:
+                    type: integer
+                    example: 1
+                  is_blocked:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2020-01-01T00:00:00.000Z'
+                  updated_at:
+                    type: string
+                    example: '2020-01-01T00:00:00.000Z'
+                required:
+                - id
+                - is_blocked
+                - user_id
+                - room_id
+                - created_at
+                - updated_at
+        '401':
+          description: Unauthorized
+        '404':
+          description: Invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_participant:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                      example: 1
+                    is_blocked:
+                      type: boolean
+                      example: false
+                  required:
+                  - user_id
+                  - is_blocked
+              required:
+              - room_participant
+        required: true
+  "/api/rooms/{id}/participants/{participant_id}":
+    delete:
+      summary: Remove participant from a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      - name: participant_id
+        in: path
+        required: true
+        description: Participant ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Participant removed
+    put:
+      summary: Block or unblocked participant from a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      - name: participant_id
+        in: path
+        required: true
+        description: Participant ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: blocked or unblocked Participant
+        '401':
+          description: Unauthorized
+  "/api/rooms/{id}/moderators/{participant_id}":
+    put:
+      summary: Add ou remove moderator participant to a room
+      tags:
+      - Rooms
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Room ID
+        schema:
+          type: string
+      - name: participant_id
+        in: path
+        required: true
+        description: Participant ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Participant added as moderator
+  "/api/users":
+    get:
+      summary: User data
+      tags:
+      - Users
+      security:
+      - Bearer: {}
+      responses:
+        '200':
+          description: User data
+        '401':
+          description: Unauthorized
+servers:
+- url: http://localhost:3001

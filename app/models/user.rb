@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User < ApplicationRecord # rubocop:todo Style/Documentation
+class User < ApplicationRecord
   rolify
 
   belongs_to :app

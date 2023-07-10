@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApiVersionConstraint # rubocop:todo Style/Documentation
+class ApiVersionConstraint
   def initialize(options)
     @version = options[:version]
     @default = options[:default]

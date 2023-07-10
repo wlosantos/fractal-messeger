@@ -6,7 +6,7 @@ module Api
       before_action :set_app, only: %i[show update destroy]
 
       def index
-        app = App.all
+        app = current_user.app
 
         authorize app
         render json: app, status: :ok

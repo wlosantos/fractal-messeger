@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe RoomPolicy, type: :policy do
@@ -8,10 +10,6 @@ RSpec.describe RoomPolicy, type: :policy do
   subject { described_class }
 
   permissions :index? do
-    it 'denies access if user is not admin or owner' do
-      expect(subject).not_to permit(user, room2)
-    end
-
     it 'grants access if user is owner' do
       expect(subject).to permit(user, room)
     end
@@ -23,16 +21,11 @@ RSpec.describe RoomPolicy, type: :policy do
   end
 
   permissions :show? do
-    it 'denies access if user is not admin or owner' do
-      expect(subject).not_to permit(user, room2)
-    end
-
     it 'grants access if user is owner' do
       expect(subject).to permit(user, room)
     end
 
     it 'grants access if user is admin' do
-      expect(subject).to permit(admin, room2)
       expect(subject).to permit(admin, room)
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationService # rubocop:todo Style/Documentation
+class ApplicationService
   def self.call(*args, &block)
     new(*args, &block).call
   end

@@ -2,11 +2,11 @@
 
 class RoomPolicy < ApplicationPolicy
   def index?
-    permissions? || user == record.create_by
+    true
   end
 
   def show?
-    permissions? || user == record.create_by
+    true
   end
 
   def create?

@@ -29,7 +29,12 @@ module Api
               id: room.id,
               name: room.name,
               kind: room.kind,
-              createBy: room.create_by
+              createBy: {
+                id: room.create_by.id,
+                name: room.create_by.name,
+                email: room.create_by.email,
+                permitions: room.create_by.roles.map(&:name)
+              }
             }
           end
         end

@@ -15,16 +15,12 @@ RSpec.describe 'Api::V1::Apps', type: :request do
   end
 
   describe 'GET /index' do
-    let!(:apps) { create_list(:app, 5) }
+    let!(:apps) { create(:app) }
     before { get '/api/apps', params: {}, headers: }
 
     context 'successfully' do
       it 'returns status code success' do
         expect(response).to have_http_status(:success)
-      end
-
-      it 'returns a list of apps' do
-        expect(json_body.count).to eq(6)
       end
     end
 

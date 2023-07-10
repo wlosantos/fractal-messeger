@@ -3,6 +3,8 @@
 require 'api_version_constraint'
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   mount ActionCable.server => '/cable'
 
   namespace :api, defaults: { format: :json } do
