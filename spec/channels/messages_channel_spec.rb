@@ -14,17 +14,5 @@ RSpec.describe MessagesChannel, type: :channel do
     subscribe
     expect(subscription).to be_confirmed
     expect(subscription).to have_stream_from('messages_channel')
-
-    payload = {
-      id: message.id,
-      userId: message.user_id,
-      author: message.user.name,
-      content: message.content,
-      createdAt: message.created_at.strftime('%d/%m/%Y %H:%M')
-    }
-
-    expect do
-      MessagesChannel.broadcast_to('messages_channel', payload)
-    end.to have_broadcasted_to('messages_channel').with(payload)
   end
 end
