@@ -15,6 +15,163 @@ components:
 security:
 - Bearer: []
 paths:
+  "/api/apps":
+    get:
+      summary: List all apps
+      tags:
+      - Apps
+      security:
+      - Bearer: {}
+      responses:
+        '200':
+          description: Index app
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bertoni Med
+                  app_id:
+                    type: integer
+                    example: 30
+                  contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Renato Freire
+                        email:
+                          type: string
+                          example: renato@freire.com
+                        fractalId:
+                          type: string
+                          example: '10006'
+                      required:
+                      - id
+                      - name
+                      - email
+                      - fractalId
+                required:
+                - id
+                - name
+                - app_id
+                - contacts
+        '401':
+          description: Unauthorized
+  "/api/apps/{id}":
+    get:
+      summary: Show app
+      tags:
+      - Apps
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: app id
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: app found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bertoni Med
+                  app_id:
+                    type: integer
+                    example: 30
+                  contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Renato Freire
+                        email:
+                          type: string
+                          example: renato@freire.com
+                        fractalId:
+                          type: string
+                          example: '10006'
+                      required:
+                      - id
+                      - name
+                      - email
+                      - fractalId
+                  rooms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Room 1
+                        kind:
+                          type: string
+                          example: groups
+                        createBy:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Renato Freire
+                            email:
+                              type: string
+                              example: renato@email.com
+                            permitions:
+                              type: array
+                              items:
+                                type: string
+                                example: admin
+                          required:
+                          - id
+                          - name
+                          - email
+                          - permitions
+                      required:
+                      - id
+                      - name
+                      - kind
+                      - createBy
+                required:
+                - id
+                - name
+                - app_id
+                - contacts
+                - rooms
+        '404':
+          description: app not found
+        '401':
+          description: Unauthorized
   "/api/registrations":
     post:
       summary: Create a new user
