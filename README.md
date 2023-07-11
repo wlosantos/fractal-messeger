@@ -1,7 +1,7 @@
 # Api de Mensagens
 
 ### Conexão
-* Para acesso é necessário um cadastro válido da empresa
+* Para acesso é necessário um cadastro válido da empresa 'url/registrations' com os dados:
   
   ```json
   {
@@ -12,6 +12,15 @@
   }
   ```
   - A url é a base de onde será feito a verificação do fractal_id válido. Como exemplo estou usando o staging
+ 
+* Para acessar o sistema é só criar uma nova session 'url/sessions' com os dodos:
+  ```json
+  {
+	"email": "usuario@user.client@appfractal.com",
+	"fractal_id": "30021"
+  }
+  ```
+- Este acesso irá gerar um token de acesso ao serviço de mensagem
  
 * Documentação da API
   url: <a href="https://walrus-app-odsyu.ondigitalocean.app/api-docs/index.html" target="_blank">Doc messeger swagger</a>
