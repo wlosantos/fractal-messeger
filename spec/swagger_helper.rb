@@ -18,7 +18,7 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'Messeger Fractal API V1',
+        title: 'Fractal Messeger API V1',
         version: 'v1',
         description: 'API to integration with App by Fractal Tecnologia'
       },
@@ -37,12 +37,12 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'http://localhost:3001'
-          # variables: {
-          #   defaultHost: {
-          #     default: 'messeger-fractal-api.com'
-          #   }
-          # }
+          url: 'https://{defaultHost}',
+          variables: {
+            defaultHost: {
+              default: 'fractal-messeger-api.com'
+            }
+          }
         }
       ]
     }

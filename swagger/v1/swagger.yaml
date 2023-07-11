@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.1
 info:
-  title: Messeger Fractal API V1
+  title: Fractal Messeger API V1
   version: v1
   description: API to integration with App by Fractal Tecnologia
 components:
@@ -974,4 +974,7 @@ paths:
         '401':
           description: Unauthorized
 servers:
-- url: http://localhost:3001
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: fractal-messeger-api.com
