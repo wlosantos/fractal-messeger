@@ -18,6 +18,6 @@
 
 ![alt Swagger docs](https://github.com/wlosantos/fractal-messeger/blob/develop/public/swagger.png)
 
-* Para fazer os teste de endpoint use o app  <a href="https://insomnia.rest/download" target="_blank"><Insomnia/a>
+* Para fazer os teste de endpoint use o app  <a href="https://insomnia.rest/download" target="_blank">Insomnia</a>
 
 ![alt Swagger docs](https://github.com/wlosantos/fractal-messeger/blob/develop/public/insomnia.png)
