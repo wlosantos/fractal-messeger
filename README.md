@@ -30,4 +30,7 @@
 * Para fazer os teste de endpoint use o app  <a href="https://insomnia.rest/download" target="_blank">Insomnia</a>
 - segue a collection do Insomnia para teste: <a href="https://github.com/wlosantos/fractal-messeger/blob/develop/public/Insomnia_collection-fractal_messeger.json" target="_blank">Json para importar no Insomnia</a>
 
-![alt Swagger docs](https://github.com/wlosantos/fractal-messeger/blob/develop/public/insomnia.png)
+![alt Insomnia docs](https://github.com/wlosantos/fractal-messeger/blob/develop/public/insomnia.png)
+
+* O sistema está usando o Rspec:
+![alt Insomnia docs](https://github.com/wlosantos/fractal-messeger/blob/develop/public/test-rspec.png)
