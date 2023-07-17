@@ -14,6 +14,7 @@ class ApplicationController < ActionController::API
     authenticate_or_request_with_http_token do |token, _options|
       payload = JwtAuth::TokenProvider.decode_token(token)
       @current_user = User.find_by(email: payload['email'], fractal_id: payload['fractal_id'])
+    rescue JWT::DecodeError
     end
   end
 
