@@ -54,7 +54,7 @@ RSpec.describe JwtAuth::TokenProvider, type: :service do
 
     context 'failure' do
       it 'returns error when token is invalid' do
-        expect { described_class.decode_token('token') }.to raise_error(RuntimeError)
+        expect(described_class.decode_token('token')).to include('Invalid Token!')
       end
     end
   end

@@ -11,7 +11,7 @@ module JwtAuth
     def self.decode_token(token)
       JWT.decode(token, secret_key, true, algorithm: ALGORITHM)[0]
     rescue JWT::DecodeError
-      raise "Invalid Token: #{token}"
+      'Invalid Token!'
     end
 
     def self.valid_payload?(payload)

@@ -1,5 +1,28 @@
 # Api de Mensagens
 
+### Pré-requisitos
+- Ruby '3.2.2'
+- Bundler '2.4.14'
+- Docker
+- Ter a porta 3000 livre (rails)
+- Ter a porta 5433 livre (postgres)
+- Ter a porta 6378 livre (redis)
+
+### Execução
+- usando o docker
+
+  execute o comando: `docker-compose up` para iniciar o projeto; <br />
+  execute o comando: `docker-compose down` para fechar o projeto;
+
+#### Criar o banco de dados (apenas na primeira vez)
+- execute o comando: `rails db:setup`
+
+#### Executar migração (quando necessário)
+- execute o comando: `rails db:migrate`
+
+### Iniciar a aplicação
+- executar o comando: `rails server -b 0.0.0.0 -p 3000`
+
 ### Conexão
 * Para acesso é necessário um cadastro válido da empresa 'url/registrations' com os dados:
   
@@ -11,7 +34,7 @@
 	"url": "https://staging.datagateway.fractaltecnologia.com.br"
   }
   ```
-  - A url é a base de onde será feito a verificação do fractal_id válido. Como exemplo estou usando o staging
+  - A url é a base de onde será feito a verificação do fractal_id válido. Como exemplo estou usando o staging, por isso é necessário que seja adicionado um datagateway_token existente no servidor.
  
 * Para acessar o sistema é só criar uma nova session 'url/sessions' com os dodos:
   ```json
