@@ -11,7 +11,7 @@
 ### Execução
 - usando o docker
 
-  execute o comando: `docker-compose up` para iniciar o projeto;
+  execute o comando: `docker-compose up` para iniciar o projeto; <br />
   execute o comando: `docker-compose down` para fechar o projeto;
 
 #### Criar o banco de dados (apenas na primeira vez)
