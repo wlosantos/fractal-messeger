@@ -10,7 +10,7 @@ module Api
       def index
         app = App.where(id: params[:app_id]).first
         if app.present?
-          rooms = current_user.rooms.joins(:room_participants, :app).where(app_id: app.id)
+          rooms = current_user.rooms.distinct.joins(:room_participants, :app).where(app_id: app.id)
 
           render json: rooms, status: :ok
         else
@@ -90,7 +90,7 @@ module Api
       private
 
       def set_room
-        @room = current_user.rooms.find(params[:id])
+        @room = current_user.rooms.distinct.joins(:room_participants).where(id: params[:id]).first
       rescue ActiveRecord::RecordNotFound
         head 404
       end

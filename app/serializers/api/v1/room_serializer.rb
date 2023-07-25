@@ -45,7 +45,7 @@ module Api
           hash[:messages] = object.messages.map do |message|
             {
               id: message.id,
-              userId: message.user_id,
+              fractal_id: message.user.fractal_id,
               author: message.user.name,
               content: message.content,
               createdAt: message.created_at.strftime('%d/%m/%Y %H:%M')
