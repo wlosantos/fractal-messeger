@@ -3,10 +3,21 @@
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
-    stream_from 'messages_channel'
+    room = Room.find(params[:room_id])
+    if user_can_participate_in_conversation?(room)
+      stream_from 'messages_channel'
+    else
+      reject_unauthorized_connection
+    end
   end
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+  end
+
+  private
+
+  def user_can_participate_in_conversation?(room)
+    room.room_participants.find_by(user_id: current_user.id)
   end
 end

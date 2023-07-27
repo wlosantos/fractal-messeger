@@ -22,7 +22,7 @@ module Api
         object.room_participants.map do |room_participant|
           {
             RoomParticipantId: room_participant.id,
-            userId: room_participant.user_id,
+            fractal_id: room_participant.user.fractal_id,
             name: room_participant.user.name,
             moderator: room_participant.user.rooms_moderators.exists?(id: object.id),
             blocked: room_participant.is_blocked
@@ -33,7 +33,7 @@ module Api
       def moderators
         object.moderators.map do |moderator|
           {
-            userId: moderator.id,
+            fractal_id: moderator.fractal_id,
             name: moderator.name
           }
         end
@@ -45,7 +45,7 @@ module Api
           hash[:messages] = object.messages.map do |message|
             {
               id: message.id,
-              userId: message.user_id,
+              fractal_id: message.user.fractal_id,
               author: message.user.name,
               content: message.content,
               createdAt: message.created_at.strftime('%d/%m/%Y %H:%M')

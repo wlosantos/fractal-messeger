@@ -6,7 +6,7 @@ module ApplicationCable
 
     def connect
       self.current_user = find_verified_user
-      logger.add_tags 'RoomCable', current_user.email
+      logger.add_tags 'MessagesCable', current_user.email
     end
 
     # protected

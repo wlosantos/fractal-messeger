@@ -43,10 +43,10 @@ RSpec.describe 'Rooms API' do
                      items: {
                        type: :object,
                        properties: {
-                         id: { type: :integer, example: 1 },
+                         fractal_id: { type: :string, example: '10001' },
                          name: { type: :string, example: 'Wendel Lopes' }
                        },
-                       required: %w[userId name]
+                       required: %w[fractal_id name]
                      }
                    },
                    participants: {
@@ -55,12 +55,12 @@ RSpec.describe 'Rooms API' do
                        type: :object,
                        properties: {
                          RoomParticipantId: { type: :integer, example: 1 },
-                         userId: { type: :integer, example: 1 },
+                         fractal_id: { type: :string, example: '10001' },
                          name: { type: :string, example: 'Wendel Lopes' },
                          moderator: { type: :boolean, example: true },
                          blocked: { type: :boolean, example: false }
                        },
-                       required: %w[RoomParticipantId userId name moderator blocked]
+                       required: %w[RoomParticipantId fractal_id name moderator blocked]
                      }
                    }
                  },
@@ -111,10 +111,10 @@ RSpec.describe 'Rooms API' do
                    items: {
                      type: :object,
                      properties: {
-                       id: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' }
                      },
-                     required: %w[userId name]
+                     required: %w[fractal_id name]
                    }
                  },
                  participants: {
@@ -123,12 +123,12 @@ RSpec.describe 'Rooms API' do
                      type: :object,
                      properties: {
                        RoomParticipantId: { type: :integer, example: 1 },
-                       userId: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' },
                        moderator: { type: :boolean, example: false },
                        blocked: { type: :boolean, example: false }
                      },
-                     required: %w[RoomParticipantId userId name moderator blocked]
+                     required: %w[RoomParticipantId fractal_id name moderator blocked]
                    }
                  },
                  messages: {
@@ -137,12 +137,12 @@ RSpec.describe 'Rooms API' do
                      type: :object,
                      properties: {
                        id: { type: :integer, example: 1 },
-                       userId: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        author: { type: :string, example: 'Wendel Lopes' },
                        content: { type: :string, example: 'Hello World' },
                        createdAt: { type: :string, example: '2020-10-10T00:00:00.000Z' }
                      },
-                     required: %w[id userId author content createdAt]
+                     required: %w[id fractal_id author content createdAt]
                    }
                  }
                },
@@ -212,10 +212,10 @@ RSpec.describe 'Rooms API' do
                    items: {
                      type: :object,
                      properties: {
-                       id: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' }
                      },
-                     required: %w[userId name]
+                     required: %w[fractal_id name]
                    }
                  },
                  participants: {
@@ -224,12 +224,12 @@ RSpec.describe 'Rooms API' do
                      type: :object,
                      properties: {
                        RoomParticipantId: { type: :integer, example: 1 },
-                       userId: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' },
                        moderator: { type: :boolean, example: false },
                        blocked: { type: :boolean, example: false }
                      },
-                     required: %w[RoomParticipantId userId name moderator blocked]
+                     required: %w[RoomParticipantId fractal_id name moderator blocked]
                    }
                  }
                },
@@ -300,10 +300,10 @@ RSpec.describe 'Rooms API' do
                    items: {
                      type: :object,
                      properties: {
-                       id: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' }
                      },
-                     required: %w[userId name]
+                     required: %w[fractal_id name]
                    }
                  },
                  participants: {
@@ -312,12 +312,12 @@ RSpec.describe 'Rooms API' do
                      type: :object,
                      properties: {
                        RoomParticipantId: { type: :integer, example: 1 },
-                       userId: { type: :integer, example: 1 },
+                       fractal_id: { type: :string, example: '10001' },
                        name: { type: :string, example: 'Wendel Lopes' },
                        moderator: { type: :boolean, example: false },
                        blocked: { type: :boolean, example: false }
                      },
-                     required: %w[RoomParticipantId userId name moderator blocked]
+                     required: %w[RoomParticipantId fractal_id name moderator blocked]
                    }
                  }
                },
