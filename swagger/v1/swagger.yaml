@@ -360,14 +360,14 @@ paths:
                       items:
                         type: object
                         properties:
-                          id:
-                            type: integer
-                            example: 1
+                          fractal_id:
+                            type: string
+                            example: '10001'
                           name:
                             type: string
                             example: Wendel Lopes
                         required:
-                        - userId
+                        - fractal_id
                         - name
                     participants:
                       type: array
@@ -377,9 +377,9 @@ paths:
                           RoomParticipantId:
                             type: integer
                             example: 1
-                          userId:
-                            type: integer
-                            example: 1
+                          fractal_id:
+                            type: string
+                            example: '10001'
                           name:
                             type: string
                             example: Wendel Lopes
@@ -391,7 +391,7 @@ paths:
                             example: false
                         required:
                         - RoomParticipantId
-                        - userId
+                        - fractal_id
                         - name
                         - moderator
                         - blocked
@@ -460,14 +460,14 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
                       required:
-                      - userId
+                      - fractal_id
                       - name
                   participants:
                     type: array
@@ -477,9 +477,9 @@ paths:
                         RoomParticipantId:
                           type: integer
                           example: 1
-                        userId:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
@@ -491,7 +491,7 @@ paths:
                           example: false
                       required:
                       - RoomParticipantId
-                      - userId
+                      - fractal_id
                       - name
                       - moderator
                       - blocked
@@ -594,14 +594,14 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
                       required:
-                      - userId
+                      - fractal_id
                       - name
                   participants:
                     type: array
@@ -611,9 +611,9 @@ paths:
                         RoomParticipantId:
                           type: integer
                           example: 1
-                        userId:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
@@ -625,7 +625,7 @@ paths:
                           example: false
                       required:
                       - RoomParticipantId
-                      - userId
+                      - fractal_id
                       - name
                       - moderator
                       - blocked
@@ -637,9 +637,9 @@ paths:
                         id:
                           type: integer
                           example: 1
-                        userId:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         author:
                           type: string
                           example: Wendel Lopes
@@ -651,7 +651,7 @@ paths:
                           example: '2020-10-10T00:00:00.000Z'
                       required:
                       - id
-                      - userId
+                      - fractal_id
                       - author
                       - content
                       - createdAt
@@ -721,14 +721,14 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
                       required:
-                      - userId
+                      - fractal_id
                       - name
                   participants:
                     type: array
@@ -738,9 +738,9 @@ paths:
                         RoomParticipantId:
                           type: integer
                           example: 1
-                        userId:
-                          type: integer
-                          example: 1
+                        fractal_id:
+                          type: string
+                          example: '10001'
                         name:
                           type: string
                           example: Wendel Lopes
@@ -752,7 +752,7 @@ paths:
                           example: false
                       required:
                       - RoomParticipantId
-                      - userId
+                      - fractal_id
                       - name
                       - moderator
                       - blocked
