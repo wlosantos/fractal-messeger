@@ -19,8 +19,9 @@ module Api
       end
 
       def show
-        authorize @room
-        render json: @room, serializer: RoomSerializer, show_messager: true, status: :ok
+        room = current_user.rooms.distinct.joins(:room_participants).where(id: @room.id).first
+        authorize room
+        render json: room, serializer: RoomSerializer, show_messager: true, status: :ok
       end
 
       def create
@@ -90,7 +91,7 @@ module Api
       private
 
       def set_room
-        @room = current_user.rooms.distinct.joins(:room_participants).where(id: params[:id]).first
+        @room = Room.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         head 404
       end
