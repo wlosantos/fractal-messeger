@@ -22,10 +22,17 @@ jobs:
           POSTGRES_DB: rails_test
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
       redis:
         image: redis:5-alpine
         ports:
           - "6379:6379"
+        options: --entrypoint redis-server
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
@@ -54,8 +61,8 @@ jobs:
         with:
           bundler-cache: true
       # Add or replace any other lints here
-      # - name: Security audit dependencies
-      # run: bundle exec bundle audit --update
+      - name: Security audit dependencies
+        run: bundle exec bundle audit --update
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
       - name: Lint Ruby files
