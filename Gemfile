@@ -9,7 +9,6 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.5'
 gem 'redis', '~> 4.0'
-# gem 'sqlite3', '~> 1.4'
 
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'
@@ -53,6 +52,8 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 4.5', '>= 4.5.1'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
