@@ -172,35 +172,6 @@ paths:
           description: app not found
         '401':
           description: Unauthorized
-  "/api/registrations":
-    post:
-      summary: Create a new user
-      tags:
-      - Auth - Registrations
-      parameters: []
-      responses:
-        '201':
-          description: User created
-        '422':
-          description: invalid request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_application_id:
-                  type: integer
-                  example: 2
-                user_application_name:
-                  type: string
-                  example: Bertoni
-                datagateway_token:
-                  type: string
-                  example: b30c50a18d-40eccaae91-1685622812
-                url:
-                  type: string
-                  example: https://staging.datagateway.fractaltecnologia.com.br
   "/api/sessions":
     post:
       summary: Creates a session
@@ -219,7 +190,9 @@ paths:
                 properties:
                   token:
                     type: string
-                    example: eyJhbGciOiJIUzI1NiJ9
+                    exemple: asdf-asdf-asdf-asdf-asdf
+                required:
+                - token
         '401':
           description: Invalid credentials
       requestBody:
@@ -228,15 +201,16 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                user_application_id:
+                  type: integer
+                  exemple: 2
+                token:
                   type: string
-                  example: wendel.lopes@fractaltecnologia.com.br
-                fractal_id:
-                  type: string
-                  example: '10006'
+                  exemple: b30c50a18d-40eccaae91-1685622812
               required:
-              - email
-              - fractal_id
+              - user_application_id
+              - token
+        required: true
   "/api/rooms/{id}/messages":
     post:
       summary: Create message
