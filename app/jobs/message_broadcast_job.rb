@@ -13,6 +13,6 @@ class MessageBroadcastJob < ApplicationJob
       createdAt: message.created_at.strftime('%d/%m/%Y %H:%M')
     }
 
-    ActionCable.server.broadcast('messages_channel', payload)
+    ActionCable.server.broadcast("messages_channel_#{message.room_id}", payload)
   end
 end
