@@ -16,6 +16,6 @@ RSpec.describe MessagesChannel, type: :channel do
   it 'broadcasts a message to connected clients' do
     subscribe room_id: room.id
     expect(subscription).to be_confirmed
-    expect(subscription).to have_stream_from('messages_channel')
+    expect(subscription).to have_stream_from("messages_channel_#{room.id}")
   end
 end

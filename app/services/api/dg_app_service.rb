@@ -15,7 +15,7 @@ module Api
     end
 
     def dg_app
-      response || @conn.get do |req|
+      @response || @conn.get do |req|
         req.url "api/v1/applications/#{@app}"
       end
     rescue Faraday::ConnectionFailed => e

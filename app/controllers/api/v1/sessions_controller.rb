@@ -51,7 +51,8 @@ module Api
       end
 
       def app_verify?
-        params[:user_application_id].is_a?(Integer) && params[:user_application_id].positive?
+        app_id = params[:user_application_id].to_i
+        app_id.is_a?(Integer) && app_id.positive?
       end
     end
   end
