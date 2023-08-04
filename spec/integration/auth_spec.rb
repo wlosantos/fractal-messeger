@@ -3,19 +3,14 @@
 require 'swagger_helper'
 
 RSpec.describe 'Auth API' do
-  let!(:stubs) { Faraday::Adapter::Test::Stubs.new }
-  let!(:conn) { Faraday.new { |b| b.adapter(:test, stubs) } }
   let(:account) { create(:user) }
+  let(:token) { JwtAuth::TokenProvider.issue_token({ email: account.email, fractal_id: account.fractal_id }) }
 
   let(:headers) do
     {
       'Accept' => 'application/vnd.messeger-fractal.v1',
       'Content-Type' => Mime[:json].to_s
     }
-  end
-
-  after do
-    Faraday.default_connection = nil
   end
 
   path '/api/sessions' do
@@ -43,8 +38,7 @@ RSpec.describe 'Auth API' do
                required: %w[token]
 
         let(:Authorization) { '' }
-        let(:params) { { user_application_id: 2, token: 'b30c50a18d-40eccaae91-1685622812' } }
-        let(:token) { JwtAuth::TokenProvider.issue_token({ email: admin.email, fractal_id: admin.fractal_id }) }
+        let(:params) { { user_application_id: account.app_id, token: account.dg_token } }
         run_test!
       end
 

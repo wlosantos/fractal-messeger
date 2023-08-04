@@ -7,7 +7,7 @@ module Api
       before_action :token_params, only: :create
 
       def create
-        if @token
+        if @token && app_verify?
           account_token = Users::HasAccountService.call(@token)
 
           if account_token
@@ -17,9 +17,11 @@ module Api
           else
             auth = Users::HasDgAccountService.call(@token)
 
-            if auth[:error]
-              logger_message(auth[:error])
-              render json: { error: auth[:error] }, status: :unauthorized
+            if auth[:error] || !auth.success?
+              error = auth[:error] || 'Invalid credentials'
+
+              logger_message(error)
+              render json: { error: }, status: :unauthorized
             else
               dg_user = JSON.parse(auth.body, symbolize_names: true)
               account_token = Users::LoginAccountService.new(token: @token, dg_user:,
@@ -46,6 +48,11 @@ module Api
 
       def logger_message(message)
         logger.error "[#{Time.now}] - #{message}"
+      end
+
+      def app_verify?
+        app_id = params[:user_application_id].to_i
+        app_id.is_a?(Integer) && app_id.positive?
       end
     end
   end

@@ -5,7 +5,7 @@ class MessagesChannel < ApplicationCable::Channel
     # stream_from "some_channel"
     room = Room.find(params[:room_id])
     if user_can_participate_in_conversation?(room)
-      stream_from 'messages_channel'
+      stream_from "messages_channel_#{params[:room_id]}"
     else
       reject_unauthorized_connection
     end

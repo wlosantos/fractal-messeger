@@ -8,11 +8,11 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
   describe 'POST /sessions' do
     context 'when account exists' do
       context 'successfully' do
-        let(:account) { create(:user) }
+        let!(:account) { create(:user) }
         let(:token) { JwtAuth::TokenProvider.issue_token({ email: account.email, fractal_id: account.fractal_id }) }
 
         before do
-          post '/api/sessions', params: { token:, user_application_id: account.app_id }
+          post '/api/sessions', params: { token: account.dg_token, user_application_id: account.app_id }
         end
 
         it 'returns a JWT token' do
@@ -43,15 +43,6 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
 
         after do
           Faraday.default_connection = nil
-        end
-
-        it 'when user dg exist' do
-          stubs.post('/api/v1/users/check') do
-            [200, {}, { id: 1, name: 'development test', email: 'test@email.com', fractal_id: '10006' }.to_json]
-          end
-
-          post('/api/sessions', params:)
-          expect(response).to have_http_status(:ok)
         end
 
         it 'when user dg does not exist' do

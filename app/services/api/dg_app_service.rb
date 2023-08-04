@@ -11,11 +11,11 @@ module Api
     end
 
     def call
-      is_token? ? dg_app : { error: 'No token' }
+      is_token? && is_app? ? dg_app : { error: 'No token' }
     end
 
     def dg_app
-      @conn.get do |req|
+      @response || @conn.get do |req|
         req.url "api/v1/applications/#{@app}"
       end
     rescue Faraday::ConnectionFailed => e
@@ -24,6 +24,10 @@ module Api
 
     def is_token?
       @token.present?
+    end
+
+    def is_app?
+      @app.present?
     end
   end
 end
